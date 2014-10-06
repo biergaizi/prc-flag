@@ -1,5 +1,5 @@
 /*
-* flag.c - draw the national flag of PRC
+* prc_flag.c - draw the national flag of PRC
 *
 * $ cc prc_flag.c -I/usr/include/cairo -lcairo -lm -std=c99
 *
