@@ -168,8 +168,8 @@ void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsign
     cairo_set_source_rgb(cr, 0, 0, 0);  /* black */
     cairo_set_line_width(cr, 2);
 
-    float max_y = (botright->y - topleft->y);
-    float max_x  = (botright->x - topleft->x);
+    double max_y = botright->y - topleft->y;
+    double max_x = botright->x - topleft->x;
 
     for (int i = 0; i < max_y; i += max_y / row) {
         cairo_move_to(cr, i, topleft->y);
