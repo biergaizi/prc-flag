@@ -81,17 +81,17 @@ typedef struct Point {
 #define BASE (HEIGHT / 2 / 10)
 
 
-void star(cairo_t *cr, Point *center, double r, Point *circle);
-void rotate(cairo_t *cr, Point *point, double radian);
-Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2);
-double radian_two_points(Point *p1, Point *p2, double r);
-void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsigned int col);
-void line(cairo_t *cr, Point *p1, Point *p2);
-void flag_star(cairo_t *cr, Point *p, double r);
-void flag_line(cairo_t *cr, Point *center);
+static void star(cairo_t *cr, Point *center, double r, Point *circle);
+static void rotate(cairo_t *cr, Point *point, double radian);
+static Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2);
+static double radian_two_points(Point *p1, Point *p2, double r);
+static void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsigned int col);
+static void line(cairo_t *cr, Point *p1, Point *p2);
+static void flag_star(cairo_t *cr, Point *p, double r);
+static void flag_line(cairo_t *cr, Point *center);
 
 
-void star(cairo_t *cr, Point *center, double r, Point *circle)
+static void star(cairo_t *cr, Point *center, double r, Point *circle)
 {
     Point topleft   = POINT(center->x - r * sin(2 * M_PI / 5),
                             center->y - r * cos(2 * M_PI / 5));
@@ -126,14 +126,14 @@ void star(cairo_t *cr, Point *center, double r, Point *circle)
     cairo_restore(cr);
 }
 
-void rotate(cairo_t *cr, Point *point, double radian)
+static void rotate(cairo_t *cr, Point *point, double radian)
 {
     cairo_translate(cr, point->x, point->y);
     cairo_rotate(cr, radian);
     cairo_translate(cr, -point->x, -point->y);
 }
 
-Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2)
+static Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2)
 {
     /* y = mx + c, solve m and c from p1 and p2 */
     double lm = (p2->y - p1->y) / (p2->x - p1->x);
@@ -155,7 +155,7 @@ Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2)
     return POINT(x1, y1);
 }
 
-double radian_two_points(Point *p1, Point *p2, double r)
+static double radian_two_points(Point *p1, Point *p2, double r)
 {
     double distance = sqrt(pow(p2->x - p1->x, 2) + pow(p2->y - p1->y, 2));
     double angle = 2 * asin(distance / 2 / r);
@@ -168,7 +168,7 @@ double radian_two_points(Point *p1, Point *p2, double r)
     return angle;
 }
 
-void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsigned int col)
+static void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsigned int col)
 {
     cairo_save(cr);
     cairo_set_source_rgb(cr, 0, 0, 0);  /* black */
@@ -190,7 +190,7 @@ void grid(cairo_t *cr, Point *topleft, Point *botright, unsigned int row, unsign
     cairo_restore(cr);
 }
 
-void line(cairo_t *cr, Point *p1, Point *p2)
+static void line(cairo_t *cr, Point *p1, Point *p2)
 {
     cairo_save(cr);
     cairo_set_source_rgb(cr, 0, 0, 0);  /* black */
@@ -200,7 +200,7 @@ void line(cairo_t *cr, Point *p1, Point *p2)
     cairo_restore(cr);
 }
 
-void flag_star(cairo_t *cr, Point *p, double r)
+static void flag_star(cairo_t *cr, Point *p, double r)
 {
     Point *circle = NULL;
     if (p->x != BIG_STAR.y && p->y != BIG_STAR.y) {
@@ -216,7 +216,7 @@ void flag_star(cairo_t *cr, Point *p, double r)
     star(cr, p, r, circle);
 }
 
-void flag_line(cairo_t *cr, Point *center)
+static void flag_line(cairo_t *cr, Point *center)
 {
     line(cr,
          &POINT(BIG_STAR.x * BASE,
@@ -225,7 +225,7 @@ void flag_line(cairo_t *cr, Point *center)
                 center->y * BASE));
 }
 
-void show_usage(char *name)
+static void show_usage(char *name)
 {
     printf("Usage: %s [OPTION]\n", name);
     printf("   -a\tDraw all auxiliary lines\n");
@@ -233,7 +233,7 @@ void show_usage(char *name)
     printf("   -h\tThis help message\n");
 }
 
-int str_ends_with(const char *str, const char *suffix)
+static int str_ends_with(const char *str, const char *suffix)
 {
     size_t lenstr = strlen(str);
     size_t lensuffix = strlen(suffix);
@@ -243,7 +243,7 @@ int str_ends_with(const char *str, const char *suffix)
     return strncmp(str + lenstr - lensuffix, suffix, lensuffix) == 0;
 }
 
-void *xmalloc(size_t size)
+static void *xmalloc(size_t size)
 {
     static char error_msg[] = "malloc() failed\n";
     void *ptr = malloc(size);
