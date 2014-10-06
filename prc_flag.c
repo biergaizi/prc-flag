@@ -33,8 +33,8 @@
 #error "Please use a C99 compiler (or add '-std=c99') to compile"
 #endif
 
-#ifndef _GNU_SOURCE
-#define _GNU_SOURCE  /* M_PI is a (GNU) extension, and disabled by default in C99 */
+#ifndef _GNU_SOURCE /* M_PI is a (GNU) extension */
+#define _GNU_SOURCE /* It was disabled by default in C99 */
 #endif
 
 #include <stdio.h>
