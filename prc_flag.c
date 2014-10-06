@@ -46,6 +46,12 @@
 #include <assert.h>
 #include <cairo.h>
 
+/* floating-point comparison */
+#ifndef NDEBUG
+#define EPSILON 0.0001
+#define fequal(a, b) ((fabs((a) - (b)) < EPSILON))
+#endif
+
 
 typedef struct Point {
     double x;
@@ -132,7 +138,7 @@ Point circle_line_intersection(Point *circle, double r, Point *p1, Point *p2)
     /* y = mx + c, solve m and c from p1 and p2 */
     double lm = (p2->y - p1->y) / (p2->x - p1->x);
     double lc = p1->y - p1->x * lm;
-    assert(lc == p2->y - p2->x * lm);
+    assert(fequal(lc, p2->y - p2->x * lm));
 
     /* solve (x - p) ^ 2 + (y - q) ^ 2 = r ^ 2 and y = mx + c */
     double a = pow(lm, 2) + 1;
